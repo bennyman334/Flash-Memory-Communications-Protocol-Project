@@ -7,22 +7,30 @@ This is a communication protocols based project that emphasizes on the acquisiti
 
 ## II. SPI Flash Memory
 ### **#1 void Flash_WriteEnable(void)**
-This command is required prior to any writes to memory.
-**Write Enable Command:** 0x06
-**Process:** Flash CS low (to start communication), Send SPI command, and Flash CS high (to end communication)
+This enable command is required prior to any writes to memory.
+
+- **Write Enable Command:** `0x06`
+
+- **Process:** Flash CS low (to start communication), Send SPI command, and Flash CS high (to end communication)
+
 
 ### **#2 void Flash_SectorErase(uint32_t address)**
 Erases an entire sector of Flash Memory (4kB of memory). Function finishes execution after erasure is fully done.
-Sector Erase Command: 0x20
-Read Command: 0x05
+
+Commands:
+- **Sector Erase Command:** `0x20`
+- **Read Command:** `0x05`
 
 Process: 
 1. Split erasure address into 3 bytes: [address23:16] [address15:8] [address7:0]
 2. Transmit the sector erase command and address
 3. Transmit read command for "Write In Progress" status until no longer busy (then exit loop)
 
+
 ### **#3 void Flash_ReadData (uint32_t address, uint8_t *buffer, uint16_t length)**
-**Sector Erase Command:** 0x03
+
+- **Sector Erase Command:** `0x03`
+
 1. Split erasure address into 3 bytes: [address23:16] [address15:8] [address7:0]
 2. Transmit the sector erase command and address
 3. Receive 'length' number of bytes from memory, stored into 'buffer'
